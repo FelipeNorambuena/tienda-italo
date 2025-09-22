@@ -57,4 +57,10 @@ public interface AtributoProductoMapper {
 
     // Conversión de lista de entidades a lista de DTOs simplificados
     List<AtributoProductoResponseDTO> toSimpleResponseDTOList(List<AtributoProducto> atributos);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("atributosToResponseDTOList")
+    default List<AtributoProductoResponseDTO> atributosToResponseDTOList(List<AtributoProducto> atributos) {
+        return toResponseDTOList(atributos);
+    }
 }

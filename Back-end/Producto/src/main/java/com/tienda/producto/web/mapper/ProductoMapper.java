@@ -1,7 +1,7 @@
 package com.tienda.producto.web.mapper;
 
 import com.tienda.producto.application.dto.*;
-import com.tienda.producto.domain.entity.Producto;
+import com.tienda.producto.domain.entity.*;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -39,6 +39,11 @@ public interface ProductoMapper {
     @Mapping(target = "necesitaReposicion", expression = "java(producto.necesitaReposicion())")
     @Mapping(target = "estadoStock", expression = "java(producto.getEstadoStock())")
     @Mapping(target = "esDisponible", expression = "java(producto.esDisponible())")
+    @Mapping(target = "categoria", source = "categoria", qualifiedByName = "categoriaToResponseDTO")
+    @Mapping(target = "marca", source = "marca", qualifiedByName = "marcaToResponseDTO")
+    @Mapping(target = "atributos", source = "atributos", qualifiedByName = "atributosToResponseDTOList")
+    @Mapping(target = "imagenes", source = "imagenes", qualifiedByName = "imagenesToResponseDTOList")
+    @Mapping(target = "productosRelacionados", source = "productosRelacionados", qualifiedByName = "productosRelacionadosToResponseDTOList")
     ProductoResponseDTO toResponseDTO(Producto producto);
 
     // Conversión de lista de entidades a lista de DTOs
@@ -119,4 +124,145 @@ public interface ProductoMapper {
     @Mapping(target = "productosSinStock", expression = "java(java.util.List.of(toResponseDTO(producto)))")
     @Mapping(target = "fechaGeneracion", expression = "java(java.time.LocalDateTime.now())")
     ProductoEstadisticasDTO toEstadisticasDTO(Producto producto);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("categoriaToResponseDTO")
+    default CategoriaResponseDTO categoriaToResponseDTO(Categoria categoria) {
+        if (categoria == null) return null;
+        return CategoriaResponseDTO.builder()
+                .id(categoria.getId())
+                .nombre(categoria.getNombre())
+                .descripcion(categoria.getDescripcion())
+                .slug(categoria.getSlug())
+                .activa(categoria.getActiva())
+                .destacada(categoria.getDestacada())
+                .orden(categoria.getOrden())
+                .nivel(categoria.getNivel())
+                .rutaCompleta(categoria.getRutaCompleta())
+                .totalProductos(categoria.getTotalProductos())
+                .totalProductosActivos(categoria.getTotalProductosActivos())
+                .totalSubcategorias(categoria.getTotalSubcategorias())
+                .totalSubcategoriasActivas(categoria.getTotalSubcategoriasActivas())
+                .esVisible(categoria.esVisible())
+                .createdAt(categoria.getCreatedAt())
+                .updatedAt(categoria.getUpdatedAt())
+                .build();
+    }
+    
+    @Named("marcaToResponseDTO")
+    default MarcaResponseDTO marcaToResponseDTO(Marca marca) {
+        if (marca == null) return null;
+        return MarcaResponseDTO.builder()
+                .id(marca.getId())
+                .nombre(marca.getNombre())
+                .descripcion(marca.getDescripcion())
+                .slug(marca.getSlug())
+                .activa(marca.getActiva())
+                .destacada(marca.getDestacada())
+                .orden(marca.getOrden())
+                .logoUrl(marca.getLogoUrl())
+                .sitioWeb(marca.getSitioWeb())
+                .paisOrigen(marca.getPaisOrigen())
+                .anoFundacion(marca.getAnoFundacion())
+                .palabrasClave(marca.getPalabrasClave())
+                .createdAt(marca.getCreatedAt())
+                .updatedAt(marca.getUpdatedAt())
+                .build();
+    }
+    
+    @Named("atributosToResponseDTOList")
+    default List<AtributoProductoResponseDTO> atributosToResponseDTOList(List<AtributoProducto> atributos) {
+        if (atributos == null) return null;
+        return atributos.stream()
+                .map(this::atributoToResponseDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
+    @Named("imagenesToResponseDTOList")
+    default List<ImagenProductoResponseDTO> imagenesToResponseDTOList(List<ImagenProducto> imagenes) {
+        if (imagenes == null) return null;
+        return imagenes.stream()
+                .map(this::imagenToResponseDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
+    @Named("productosRelacionadosToResponseDTOList")
+    default List<ProductoRelacionadoResponseDTO> productosRelacionadosToResponseDTOList(List<ProductoRelacionado> productosRelacionados) {
+        if (productosRelacionados == null) return null;
+        return productosRelacionados.stream()
+                .map(this::productoRelacionadoToResponseDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
+    // Métodos auxiliares para conversiones individuales
+    default AtributoProductoResponseDTO atributoToResponseDTO(AtributoProducto atributo) {
+        if (atributo == null) return null;
+        return AtributoProductoResponseDTO.builder()
+                .id(atributo.getId())
+                .nombre(atributo.getNombre())
+                .valor(atributo.getValor())
+                .unidad(atributo.getUnidad())
+                .valorCompleto(atributo.getValorCompleto())
+                .nombreCompleto(atributo.getNombreCompleto())
+                .esVisible(atributo.getEsVisible())
+                .esFiltrable(atributo.getEsFiltrable())
+                .orden(atributo.getOrden())
+                .tipo(atributo.getTipo())
+                .opcionesLista(atributo.getOpcionesLista())
+                .tieneOpciones(atributo.tieneOpciones())
+                .puedeFiltrarse(atributo.puedeFiltrarse())
+                .esNumerico(atributo.esNumerico())
+                .esTexto(atributo.esTexto())
+                .esBooleano(atributo.esBooleano())
+                .esLista(atributo.esLista())
+                .createdAt(atributo.getCreatedAt())
+                .updatedAt(atributo.getUpdatedAt())
+                .build();
+    }
+    
+    default ImagenProductoResponseDTO imagenToResponseDTO(ImagenProducto imagen) {
+        if (imagen == null) return null;
+        return ImagenProductoResponseDTO.builder()
+                .id(imagen.getId())
+                .url(imagen.getUrl())
+                .urlThumbnail(imagen.getUrlThumbnail())
+                .urlMiniatura(imagen.getUrlMiniatura())
+                .alt(imagen.getAlt())
+                .titulo(imagen.getTitulo())
+                .descripcion(imagen.getDescripcion())
+                .esPrincipal(imagen.getEsPrincipal())
+                .orden(imagen.getOrden())
+                .ancho(imagen.getAncho())
+                .alto(imagen.getAlto())
+                .tamañoBytes(imagen.getTamañoBytes())
+                .formato(imagen.getFormato())
+                .esImagenHorizontal(imagen.esImagenHorizontal())
+                .esImagenVertical(imagen.esImagenVertical())
+                .orientacion(imagen.getOrientacion())
+                .createdAt(imagen.getCreatedAt())
+                .updatedAt(imagen.getUpdatedAt())
+                .build();
+    }
+    
+    default ProductoRelacionadoResponseDTO productoRelacionadoToResponseDTO(ProductoRelacionado relacion) {
+        if (relacion == null) return null;
+        return ProductoRelacionadoResponseDTO.builder()
+                .id(relacion.getId())
+                .productoRelacionadoId(relacion.getProductoRelacionadoId())
+                .tipoRelacion(relacion.getTipoRelacion())
+                .tipoRelacionCompleto(relacion.getTipoRelacionCompleto())
+                .descripcion(relacion.getDescripcion())
+                .descripcionCompleta(relacion.getDescripcionCompleta())
+                .esSimetrica(relacion.getEsSimetrica())
+                .esRelacionSimetrica(relacion.esRelacionSimetrica())
+                .esRelacionAsimetrica(relacion.esRelacionAsimetrica())
+                .esRelacionBidireccional(relacion.esRelacionBidireccional())
+                .esRelacionUnidireccional(relacion.esRelacionUnidireccional())
+                .tipoRelacionDescripcion(relacion.getTipoRelacionDescripcion())
+                .orden(relacion.getOrden())
+                .activa(relacion.getActiva())
+                .createdAt(relacion.getCreatedAt())
+                .updatedAt(relacion.getUpdatedAt())
+                .build();
+    }
 }

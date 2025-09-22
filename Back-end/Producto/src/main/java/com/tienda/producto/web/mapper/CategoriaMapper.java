@@ -34,13 +34,15 @@ public interface CategoriaMapper {
     @Mapping(target = "totalSubcategorias", expression = "java(categoria.getTotalSubcategorias())")
     @Mapping(target = "totalSubcategoriasActivas", expression = "java(categoria.getTotalSubcategoriasActivas())")
     @Mapping(target = "esVisible", expression = "java(categoria.esVisible())")
+    @Mapping(target = "categoriaPadre", source = "categoriaPadre", qualifiedByName = "categoriaToResponseDTO")
+    @Mapping(target = "subcategorias", source = "subcategorias", qualifiedByName = "categoriasToResponseDTOList")
     CategoriaResponseDTO toResponseDTO(Categoria categoria);
 
     // Conversión de lista de entidades a lista de DTOs
     List<CategoriaResponseDTO> toResponseDTOList(List<Categoria> categorias);
 
     // Conversión de página de entidades a página de DTOs
-    @Mapping(target = "categorias", source = "content")
+    @Mapping(target = "categorias", source = "content", qualifiedByName = "categoriasToResponseDTOList")
     @Mapping(target = "pagina", source = "number")
     @Mapping(target = "tamanio", source = "size")
     @Mapping(target = "totalElementos", source = "totalElements")
@@ -70,4 +72,15 @@ public interface CategoriaMapper {
 
     // Conversión de lista de entidades a lista de DTOs simplificados
     List<CategoriaResponseDTO> toSimpleResponseDTOList(List<Categoria> categorias);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("categoriaToResponseDTO")
+    default CategoriaResponseDTO categoriaToResponseDTO(Categoria categoria) {
+        return toResponseDTO(categoria);
+    }
+    
+    @Named("categoriasToResponseDTOList")
+    default List<CategoriaResponseDTO> categoriasToResponseDTOList(List<Categoria> categorias) {
+        return toResponseDTOList(categorias);
+    }
 }

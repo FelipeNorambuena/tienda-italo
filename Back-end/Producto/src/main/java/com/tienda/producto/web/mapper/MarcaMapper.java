@@ -33,7 +33,7 @@ public interface MarcaMapper {
     List<MarcaResponseDTO> toResponseDTOList(List<Marca> marcas);
 
     // Conversión de página de entidades a página de DTOs
-    @Mapping(target = "marcas", source = "content")
+    @Mapping(target = "marcas", source = "content", qualifiedByName = "marcasToResponseDTOList")
     @Mapping(target = "pagina", source = "number")
     @Mapping(target = "tamanio", source = "size")
     @Mapping(target = "totalElementos", source = "totalElements")
@@ -59,4 +59,10 @@ public interface MarcaMapper {
 
     // Conversión de lista de entidades a lista de DTOs simplificados
     List<MarcaResponseDTO> toSimpleResponseDTOList(List<Marca> marcas);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("marcasToResponseDTOList")
+    default List<MarcaResponseDTO> marcasToResponseDTOList(List<Marca> marcas) {
+        return toResponseDTOList(marcas);
+    }
 }

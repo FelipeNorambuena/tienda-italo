@@ -49,4 +49,10 @@ public interface ProductoRelacionadoMapper {
 
     // Conversión de lista de entidades a lista de DTOs simplificados
     List<ProductoRelacionadoResponseDTO> toSimpleResponseDTOList(List<ProductoRelacionado> relaciones);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("productosRelacionadosToResponseDTOList")
+    default List<ProductoRelacionadoResponseDTO> productosRelacionadosToResponseDTOList(List<ProductoRelacionado> relaciones) {
+        return toResponseDTOList(relaciones);
+    }
 }

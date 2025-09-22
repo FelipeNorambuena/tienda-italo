@@ -63,4 +63,10 @@ public interface ImagenProductoMapper {
 
     // Conversión de lista de entidades a lista de DTOs simplificados
     List<ImagenProductoResponseDTO> toSimpleResponseDTOList(List<ImagenProducto> imagenes);
+    
+    // Métodos auxiliares para resolver ambigüedades de MapStruct
+    @Named("imagenesToResponseDTOList")
+    default List<ImagenProductoResponseDTO> imagenesToResponseDTOList(List<ImagenProducto> imagenes) {
+        return toResponseDTOList(imagenes);
+    }
 }
