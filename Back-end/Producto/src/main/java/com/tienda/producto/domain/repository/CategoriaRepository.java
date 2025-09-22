@@ -217,24 +217,15 @@ public interface CategoriaRepository {
     List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
     Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
 
-    // Búsquedas de categorías por nivel
-    List<Categoria> findByCategoriaPadreIsNullAndActivaTrueOrderByOrdenAsc();
-    List<Categoria> findByCategoriaPadreIdAndActivaTrueOrderByOrdenAsc(Long categoriaPadreId);
-    List<Categoria> findByCategoriaPadreIdAndActivaTrueOrderByOrdenDesc(Long categoriaPadreId);
+    // Búsquedas de categorías por nivel (métodos ya definidos arriba)
 
-    // Búsquedas de categorías por rango de orden
-    List<Categoria> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax);
-    Page<Categoria> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax, Pageable pageable);
+    // Búsquedas de categorías por rango de orden (métodos ya definidos arriba)
     List<Categoria> findByOrdenBetweenAndCategoriaPadreIsNullAndActivaTrue(Integer ordenMin, Integer ordenMax);
     Page<Categoria> findByOrdenBetweenAndCategoriaPadreIsNullAndActivaTrue(Integer ordenMin, Integer ordenMax, Pageable pageable);
     List<Categoria> findByOrdenBetweenAndCategoriaPadreIdAndActivaTrue(Integer ordenMin, Integer ordenMax, Long categoriaPadreId);
     Page<Categoria> findByOrdenBetweenAndCategoriaPadreIdAndActivaTrue(Integer ordenMin, Integer ordenMax, Long categoriaPadreId, Pageable pageable);
 
-    // Búsquedas de categorías por rango de fechas
-    List<Categoria> findByCreatedAtBetweenAndActivaTrue(java.time.LocalDateTime fechaInicio, java.time.LocalDateTime fechaFin);
-    Page<Categoria> findByCreatedAtBetweenAndActivaTrue(java.time.LocalDateTime fechaInicio, java.time.LocalDateTime fechaFin, Pageable pageable);
-    List<Categoria> findByUpdatedAtBetweenAndActivaTrue(java.time.LocalDateTime fechaInicio, java.time.LocalDateTime fechaFin);
-    Page<Categoria> findByUpdatedAtBetweenAndActivaTrue(java.time.LocalDateTime fechaInicio, java.time.LocalDateTime fechaFin, Pageable pageable);
+    // Búsquedas de categorías por rango de fechas (métodos ya definidos arriba)
 
     // Búsquedas de categorías por múltiples criterios
     List<Categoria> findByCategoriaPadreIsNullAndDestacadaTrueAndActivaTrueOrderByOrdenAsc();

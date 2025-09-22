@@ -205,15 +205,9 @@ public interface MarcaRepositoryImpl extends JpaRepository<Marca, Long>, MarcaRe
     List<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
     Page<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
 
-    // Búsquedas de marcas por rango de orden
-    List<Marca> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax);
-    Page<Marca> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax, Pageable pageable);
+    // Búsquedas de marcas por rango de orden (métodos ya definidos arriba)
 
-    // Búsquedas de marcas por rango de fechas
-    List<Marca> findByCreatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    Page<Marca> findByCreatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin, Pageable pageable);
-    List<Marca> findByUpdatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    Page<Marca> findByUpdatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin, Pageable pageable);
+    // Búsquedas de marcas por rango de fechas (métodos ya definidos arriba)
 
     // Búsquedas de marcas por múltiples criterios
     List<Marca> findByDestacadaTrueAndActivaTrueOrderByOrdenAsc();

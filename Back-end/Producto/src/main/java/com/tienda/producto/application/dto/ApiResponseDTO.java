@@ -64,4 +64,14 @@ public class ApiResponseDTO<T> {
                 .timestamp(LocalDateTime.now())
                 .build();
     }
+
+    public static <T> ApiResponseDTO<T> error(String message, T data, int statusCode) {
+        return ApiResponseDTO.<T>builder()
+                .success(false)
+                .message(message)
+                .data(data)
+                .statusCode(statusCode)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }

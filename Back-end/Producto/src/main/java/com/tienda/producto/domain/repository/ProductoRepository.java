@@ -235,11 +235,8 @@ public interface ProductoRepository {
     List<Producto> findTop10ByCategoriaIdAndPrecioOfertaIsNotNullAndActivoTrueOrderByPrecioOfertaAsc(Long categoriaId);
     List<Producto> findTop10ByMarcaIdAndPrecioOfertaIsNotNullAndActivoTrueOrderByPrecioOfertaAsc(Long marcaId);
 
-    // Búsquedas de productos con stock bajo
-    List<Producto> findByStockLessThanEqualAndActivoTrue(Integer stock);
-    Page<Producto> findByStockLessThanEqualAndActivoTrue(Integer stock, Pageable pageable);
-    List<Producto> findByStockMinimoGreaterThanEqualAndActivoTrue(Integer stockMinimo);
-    Page<Producto> findByStockMinimoGreaterThanEqualAndActivoTrue(Integer stockMinimo, Pageable pageable);
+    // Búsquedas de productos con stock bajo (métodos ya definidos arriba)
+    List<Producto> findByStockBetweenAndActivoTrue(Integer stockMin, Integer stockMax);
 
     // Búsquedas de productos sin stock
     List<Producto> findByStockEqualsAndActivoTrue(Integer stock);

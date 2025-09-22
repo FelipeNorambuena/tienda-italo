@@ -5,8 +5,6 @@ import com.tienda.producto.domain.repository.CategoriaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -250,24 +248,15 @@ public interface CategoriaRepositoryImpl extends JpaRepository<Categoria, Long>,
     List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
     Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
 
-    // Búsquedas de categorías por nivel
-    List<Categoria> findByCategoriaPadreIsNullAndActivaTrueOrderByOrdenAsc();
-    List<Categoria> findByCategoriaPadreIdAndActivaTrueOrderByOrdenAsc(Long categoriaPadreId);
-    List<Categoria> findByCategoriaPadreIdAndActivaTrueOrderByOrdenDesc(Long categoriaPadreId);
+    // Búsquedas de categorías por nivel (métodos ya definidos arriba)
 
-    // Búsquedas de categorías por rango de orden
-    List<Categoria> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax);
-    Page<Categoria> findByOrdenBetweenAndActivaTrue(Integer ordenMin, Integer ordenMax, Pageable pageable);
+    // Búsquedas de categorías por rango de orden (métodos ya definidos arriba)
     List<Categoria> findByOrdenBetweenAndCategoriaPadreIsNullAndActivaTrue(Integer ordenMin, Integer ordenMax);
     Page<Categoria> findByOrdenBetweenAndCategoriaPadreIsNullAndActivaTrue(Integer ordenMin, Integer ordenMax, Pageable pageable);
     List<Categoria> findByOrdenBetweenAndCategoriaPadreIdAndActivaTrue(Integer ordenMin, Integer ordenMax, Long categoriaPadreId);
     Page<Categoria> findByOrdenBetweenAndCategoriaPadreIdAndActivaTrue(Integer ordenMin, Integer ordenMax, Long categoriaPadreId, Pageable pageable);
 
-    // Búsquedas de categorías por rango de fechas
-    List<Categoria> findByCreatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    Page<Categoria> findByCreatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin, Pageable pageable);
-    List<Categoria> findByUpdatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    Page<Categoria> findByUpdatedAtBetweenAndActivaTrue(LocalDateTime fechaInicio, LocalDateTime fechaFin, Pageable pageable);
+    // Búsquedas de categorías por rango de fechas (métodos ya definidos arriba)
 
     // Búsquedas de categorías por múltiples criterios
     List<Categoria> findByCategoriaPadreIsNullAndDestacadaTrueAndActivaTrueOrderByOrdenAsc();

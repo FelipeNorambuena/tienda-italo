@@ -178,7 +178,7 @@ public class Producto {
             return BigDecimal.ZERO;
         }
         return precio.subtract(precioOferta)
-                .divide(precio, 4, BigDecimal.ROUND_HALF_UP)
+                .divide(precio, 4, java.math.RoundingMode.HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
     }
 

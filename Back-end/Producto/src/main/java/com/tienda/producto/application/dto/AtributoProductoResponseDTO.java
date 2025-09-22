@@ -31,6 +31,10 @@ public class AtributoProductoResponseDTO {
     private String[] opcionesLista;
     private Boolean tieneOpciones;
     private Boolean puedeFiltrarse;
+    private Boolean esNumerico;
+    private Boolean esTexto;
+    private Boolean esBooleano;
+    private Boolean esLista;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

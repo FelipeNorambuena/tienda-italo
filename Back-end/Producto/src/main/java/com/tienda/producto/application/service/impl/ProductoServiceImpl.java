@@ -12,6 +12,7 @@ import com.tienda.producto.web.mapper.ProductoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Implementación del servicio de productos.
@@ -436,8 +438,14 @@ public class ProductoServiceImpl implements ProductoService {
     @Transactional(readOnly = true)
     public Page<ProductoResponseDTO> listarProductosConStockBajo(Pageable pageable) {
         log.debug("Listando productos con stock bajo paginados");
-        return productoRepository.findByStockLessThanEqualAndActivoTrue(10, pageable)
-                .map(productoMapper::toResponseDTO);
+        List<Producto> productos = productoRepository.findByStockLessThanEqualAndActivoTrue(10);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), productos.size());
+        List<Producto> pageContent = productos.subList(start, end);
+        
+        return new PageImpl<>(pageContent.stream()
+                .map(productoMapper::toResponseDTO)
+                .collect(Collectors.toList()), pageable, productos.size());
     }
 
     @Override
