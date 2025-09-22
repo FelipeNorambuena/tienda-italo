@@ -137,6 +137,9 @@ class CategoriaTest {
         @DisplayName("Debería identificar categoría destacada correctamente")
         void deberiaIdentificarCategoriaDestacadaCorrectamente() {
             assertTrue(categoriaPadre.getDestacada());
+
+
+            
             
             categoriaPadre.setDestacada(false);
             assertFalse(categoriaPadre.getDestacada());

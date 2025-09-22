@@ -4,7 +4,6 @@ import com.tienda.gateway.config.JwtConfigProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -29,10 +28,14 @@ import java.util.List;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
 
     private final JwtConfigProperties jwtConfig;
+    
+    public JwtAuthenticationFilter(JwtConfigProperties jwtConfig) {
+        super(Config.class);
+        this.jwtConfig = jwtConfig;
+    }
     
     // Rutas públicas que no requieren autenticación
     private static final List<String> PUBLIC_PATHS = Arrays.asList(
@@ -49,9 +52,6 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             "/actuator/**"
     );
 
-    public JwtAuthenticationFilter() {
-        super(Config.class);
-    }
 
     @Override
     public GatewayFilter apply(Config config) {
