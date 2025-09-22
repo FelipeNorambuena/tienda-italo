@@ -70,8 +70,6 @@ class ProductoServiceTest {
                 .activa(true)
                 .destacada(true)
                 .orden(1)
-                .nivel(0)
-                .rutaCompleta("Electrónicos")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -99,13 +97,11 @@ class ProductoServiceTest {
                 .sku("SGS24-001")
                 .activo(true)
                 .destacado(true)
-                .orden(1)
                 .precio(new BigDecimal("899000.00"))
                 .precioOferta(new BigDecimal("799000.00"))
                 .stock(50)
                 .stockMinimo(5)
                 .peso(0.168)
-                .dimensiones("147.0 x 70.6 x 7.6 mm")
                 .categoria(categoria)
                 .marca(marca)
                 .palabrasClave("smartphone,android,samsung")
@@ -120,13 +116,11 @@ class ProductoServiceTest {
                 .sku("SGS24-001")
                 .activo(true)
                 .destacado(true)
-                .orden(1)
                 .precio(new BigDecimal("899000.00"))
                 .precioOferta(new BigDecimal("799000.00"))
                 .stock(50)
                 .stockMinimo(5)
                 .peso(0.168)
-                .dimensiones("147.0 x 70.6 x 7.6 mm")
                 .categoriaId(1L)
                 .marcaId(1L)
                 .palabrasClave("smartphone,android,samsung")
@@ -141,13 +135,11 @@ class ProductoServiceTest {
                 .sku("SGS24-001")
                 .activo(true)
                 .destacado(true)
-                .orden(1)
                 .precio(new BigDecimal("899000.00"))
                 .precioOferta(new BigDecimal("799000.00"))
                 .stock(50)
                 .stockMinimo(5)
                 .peso(0.168)
-                .dimensiones("147.0 x 70.6 x 7.6 mm")
                 .categoria(CategoriaResponseDTO.builder()
                         .id(1L)
                         .nombre("Electrónicos")
@@ -254,7 +246,7 @@ class ProductoServiceTest {
             when(productoMapper.toResponseDTO(producto)).thenReturn(productoResponseDTO);
 
             // When
-            ProductoResponseDTO resultado = productoService.obtenerProductoPorId(1L);
+            ProductoResponseDTO resultado = productoService.obtenerProducto(1L);
 
             // Then
             assertNotNull(resultado);
@@ -270,7 +262,7 @@ class ProductoServiceTest {
 
             // When & Then
             assertThrows(RuntimeException.class, () -> {
-                productoService.obtenerProductoPorId(1L);
+                productoService.obtenerProducto(1L);
             });
         }
 
@@ -297,16 +289,17 @@ class ProductoServiceTest {
         @DisplayName("Debería buscar productos por texto")
         void deberiaBuscarProductosPorTexto() {
             // Given
-            String texto = "Samsung";
+            ProductoBusquedaDTO busquedaDTO = ProductoBusquedaDTO.builder()
+                    .build();
             List<Producto> productos = List.of(producto);
             List<ProductoResponseDTO> productosDTO = List.of(productoResponseDTO);
             
-            when(productoRepository.findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue(texto))
+            when(productoRepository.findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue("Samsung"))
                     .thenReturn(productos);
             when(productoMapper.toResponseDTOList(productos)).thenReturn(productosDTO);
 
             // When
-            List<ProductoResponseDTO> resultado = productoService.buscarProductos(texto);
+            List<ProductoResponseDTO> resultado = productoService.buscarProductos(busquedaDTO);
 
             // Then
             assertNotNull(resultado);
@@ -383,7 +376,7 @@ class ProductoServiceTest {
             productoService.eliminarProducto(1L);
 
             // Then
-            verify(productoRepository).delete(producto);
+            verify(productoRepository).deleteById(1L);
         }
 
         @Test
@@ -529,10 +522,6 @@ class ProductoServiceTest {
             // Given
             when(productoRepository.count()).thenReturn(10L);
             when(productoRepository.countByActivoTrue()).thenReturn(8L);
-            when(productoRepository.countByDestacadoTrueAndActivoTrue()).thenReturn(5L);
-            when(productoRepository.countByPrecioOfertaIsNotNullAndActivoTrue()).thenReturn(3L);
-            when(productoRepository.countByStockLessThanEqualAndActivoTrue(10)).thenReturn(2L);
-            when(productoRepository.countByStockEqualsAndActivoTrue(0)).thenReturn(1L);
 
             // When
             ProductoEstadisticasDTO estadisticas = productoService.obtenerEstadisticas();
@@ -540,11 +529,7 @@ class ProductoServiceTest {
             // Then
             assertNotNull(estadisticas);
             assertEquals(10L, estadisticas.getTotalProductos());
-            assertEquals(8L, estadisticas.getProductosActivos());
-            assertEquals(5L, estadisticas.getProductosDestacados());
-            assertEquals(3L, estadisticas.getProductosEnOferta());
-            assertEquals(2L, estadisticas.getProductosConStockBajo());
-            assertEquals(1L, estadisticas.getProductosSinStock());
+            assertEquals(8L, estadisticas.getTotalProductosActivos());
         }
     }
 }

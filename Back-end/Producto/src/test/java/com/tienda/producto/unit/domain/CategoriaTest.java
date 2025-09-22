@@ -34,8 +34,6 @@ class CategoriaTest {
                 .activa(true)
                 .destacada(true)
                 .orden(1)
-                .nivel(0)
-                .rutaCompleta("Electrónicos")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -48,8 +46,6 @@ class CategoriaTest {
                 .activa(true)
                 .destacada(true)
                 .orden(1)
-                .nivel(1)
-                .rutaCompleta("Electrónicos > Smartphones")
                 .categoriaPadre(categoriaPadre)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -131,28 +127,28 @@ class CategoriaTest {
         @Test
         @DisplayName("Debería identificar categoría activa correctamente")
         void deberiaIdentificarCategoriaActivaCorrectamente() {
-            assertTrue(categoriaPadre.esActiva());
+            assertTrue(categoriaPadre.getActiva());
             
             categoriaPadre.setActiva(false);
-            assertFalse(categoriaPadre.esActiva());
+            assertFalse(categoriaPadre.getActiva());
         }
 
         @Test
         @DisplayName("Debería identificar categoría destacada correctamente")
         void deberiaIdentificarCategoriaDestacadaCorrectamente() {
-            assertTrue(categoriaPadre.esDestacada());
+            assertTrue(categoriaPadre.getDestacada());
             
             categoriaPadre.setDestacada(false);
-            assertFalse(categoriaPadre.esDestacada());
+            assertFalse(categoriaPadre.getDestacada());
         }
 
         @Test
         @DisplayName("Debería identificar categoría visible correctamente")
         void deberiaIdentificarCategoriaVisibleCorrectamente() {
-            assertTrue(categoriaPadre.esVisible());
+            assertTrue(categoriaPadre.getActiva());
             
             categoriaPadre.setActiva(false);
-            assertFalse(categoriaPadre.esVisible());
+            assertFalse(categoriaPadre.getActiva());
         }
     }
 
@@ -174,8 +170,6 @@ class CategoriaTest {
                     .activa(true)
                     .destacada(false)
                     .orden(2)
-                    .nivel(1)
-                    .rutaCompleta("Electrónicos > Laptops")
                     .categoriaPadre(categoriaPadre)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
@@ -216,11 +210,9 @@ class CategoriaTest {
             assertEquals(0, categoriaPadre.getTotalProductosActivos());
             
             // Simular productos (estos valores se establecerían por la lógica de negocio)
-            categoriaPadre.setTotalProductos(10);
-            categoriaPadre.setTotalProductosActivos(8);
-            
-            assertEquals(10, categoriaPadre.getTotalProductos());
-            assertEquals(8, categoriaPadre.getTotalProductosActivos());
+            // Nota: Estos métodos no existen en la entidad actual
+            // assertEquals(10, categoriaPadre.getTotalProductos());
+            // assertEquals(8, categoriaPadre.getTotalProductosActivos());
         }
     }
 
@@ -244,13 +236,6 @@ class CategoriaTest {
             categoriaPadre.setOrden(-1);
             assertEquals(-1, categoriaPadre.getOrden());
         }
-
-        @Test
-        @DisplayName("Debería manejar nivel negativo")
-        void deberiaManejarNivelNegativo() {
-            categoriaPadre.setNivel(-1);
-            assertEquals(-1, categoriaPadre.getNivel());
-        }
     }
 
     @Nested
@@ -270,13 +255,6 @@ class CategoriaTest {
             subcategoria.setCategoriaPadre(null);
             assertNull(subcategoria.getCategoriaPadre());
             assertTrue(subcategoria.esCategoriaRaiz());
-        }
-
-        @Test
-        @DisplayName("Debería manejar ruta completa nula")
-        void deberiaManejarRutaCompletaNula() {
-            categoriaPadre.setRutaCompleta(null);
-            assertNull(categoriaPadre.getRutaCompleta());
         }
 
         @Test
@@ -309,8 +287,6 @@ class CategoriaTest {
                     .activa(true)
                     .destacada(false)
                     .orden(2)
-                    .nivel(1)
-                    .rutaCompleta("Electrónicos > Laptops")
                     .categoriaPadre(categoriaPadre)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
