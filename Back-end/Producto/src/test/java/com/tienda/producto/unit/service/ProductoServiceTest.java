@@ -1,7 +1,6 @@
 package com.tienda.producto.unit.service;
 
 import com.tienda.producto.application.dto.*;
-import com.tienda.producto.application.service.ProductoService;
 import com.tienda.producto.domain.entity.Producto;
 import com.tienda.producto.domain.entity.Categoria;
 import com.tienda.producto.domain.entity.Marca;
@@ -246,24 +245,25 @@ class ProductoServiceTest {
             when(productoMapper.toResponseDTO(producto)).thenReturn(productoResponseDTO);
 
             // When
-            ProductoResponseDTO resultado = productoService.obtenerProducto(1L);
+            Optional<ProductoResponseDTO> resultado = productoService.buscarProductoPorId(1L);
 
             // Then
-            assertNotNull(resultado);
-            assertEquals(1L, resultado.getId());
-            assertEquals("Samsung Galaxy S24", resultado.getNombre());
+            assertTrue(resultado.isPresent());
+            assertEquals(1L, resultado.get().getId());
+            assertEquals("Samsung Galaxy S24", resultado.get().getNombre());
         }
 
         @Test
-        @DisplayName("Debería lanzar excepción cuando producto no existe")
-        void deberiaLanzarExcepcionCuandoProductoNoExiste() {
+        @DisplayName("Debería retornar Optional vacío cuando producto no existe")
+        void deberiaRetornarOptionalVacioCuandoProductoNoExiste() {
             // Given
             when(productoRepository.findById(1L)).thenReturn(Optional.empty());
 
-            // When & Then
-            assertThrows(RuntimeException.class, () -> {
-                productoService.obtenerProducto(1L);
-            });
+            // When
+            Optional<ProductoResponseDTO> resultado = productoService.buscarProductoPorId(1L);
+
+            // Then
+            assertFalse(resultado.isPresent());
         }
 
         @Test
@@ -271,7 +271,6 @@ class ProductoServiceTest {
         void deberiaListarProductosPaginados() {
             // Given
             Page<Producto> page = new PageImpl<>(List.of(producto));
-            Page<ProductoResponseDTO> expectedPage = new PageImpl<>(List.of(productoResponseDTO));
             
             when(productoRepository.findAll(any(Pageable.class))).thenReturn(page);
             when(productoMapper.toResponseDTO(producto)).thenReturn(productoResponseDTO);
@@ -316,24 +315,25 @@ class ProductoServiceTest {
         @DisplayName("Debería actualizar producto exitosamente")
         void deberiaActualizarProductoExitosamente() {
             // Given
-            ProductoRequestDTO requestDTO = ProductoRequestDTO.builder()
-                    .nombre("Samsung Galaxy S24 Pro")
-                    .descripcion("Smartphone Android Pro de última generación")
-                    .codigo("SGS24")
-                    .sku("SGS24-001")
-                    .activo(true)
-                    .destacado(true)
-                    .orden(1)
-                    .precio(new BigDecimal("999000.00"))
-                    .precioOferta(new BigDecimal("899000.00"))
-                    .stock(60)
-                    .stockMinimo(5)
-                    .peso(0.168)
-                    .dimensiones("147.0 x 70.6 x 7.6 mm")
-                    .categoriaId(1L)
-                    .marcaId(1L)
-                    .palabrasClave("smartphone,android,samsung,pro")
-                    .build();
+        ProductoRequestDTO requestDTO = ProductoRequestDTO.builder()
+                .nombre("Samsung Galaxy S24 Pro")
+                .descripcion("Smartphone Android Pro de última generación")
+                .codigo("SGS24")
+                .sku("SGS24-001")
+                .activo(true)
+                .destacado(true)
+                .precio(new BigDecimal("999000.00"))
+                .precioOferta(new BigDecimal("899000.00"))
+                .stock(60)
+                .stockMinimo(5)
+                .peso(0.168)
+                .largo(14.7)
+                .ancho(7.06)
+                .alto(0.76)
+                .categoriaId(1L)
+                .marcaId(1L)
+                .palabrasClave("smartphone,android,samsung,pro")
+                .build();
 
             when(productoRepository.findById(1L)).thenReturn(Optional.of(producto));
             when(categoriaRepository.findById(1L)).thenReturn(Optional.of(categoria));
@@ -407,7 +407,7 @@ class ProductoServiceTest {
             when(productoMapper.toResponseDTOList(productos)).thenReturn(productosDTO);
 
             // When
-            List<ProductoResponseDTO> resultado = productoService.listarProductosPorCategoria(1L);
+            List<ProductoResponseDTO> resultado = productoService.buscarProductosPorCategoria(1L);
 
             // Then
             assertNotNull(resultado);
@@ -425,7 +425,7 @@ class ProductoServiceTest {
             when(productoMapper.toResponseDTOList(productos)).thenReturn(productosDTO);
 
             // When
-            List<ProductoResponseDTO> resultado = productoService.listarProductosPorMarca(1L);
+            List<ProductoResponseDTO> resultado = productoService.buscarProductosPorMarca(1L);
 
             // Then
             assertNotNull(resultado);
