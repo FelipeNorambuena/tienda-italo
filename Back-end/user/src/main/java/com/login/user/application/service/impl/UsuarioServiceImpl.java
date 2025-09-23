@@ -285,10 +285,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         List<TokenRecuperacion> tokensAnteriores = tokenRepository
                 .findByUsuarioAndTipoTokenAndUsadoFalseAndFechaExpiracionAfter(
                         usuario, TokenRecuperacion.TipoToken.PASSWORD_RESET, LocalDateTime.now());
-        
-        tokensAnteriores.forEach(TokenRecuperacion::marcarComoUsado);
-        tokenRepository.saveAll(tokensAnteriores);
-        
+
+        if (!tokensAnteriores.isEmpty()) {
+            tokensAnteriores.forEach(TokenRecuperacion::marcarComoUsado);
+            tokensAnteriores.forEach(tokenRepository::save);
+        }
+
         // Crear nuevo token
         TokenRecuperacion nuevoToken = TokenRecuperacion.crearTokenRecuperacionPassword(usuario);
         tokenRepository.save(nuevoToken);

@@ -93,9 +93,4 @@ public interface TokenRecuperacionRepository {
      */
     long countByUsuarioAndTipoTokenAndUsadoFalseAndFechaExpiracionAfter(
             Usuario usuario, TokenRecuperacion.TipoToken tipoToken, LocalDateTime fecha);
-
-    /**
-     * Guarda una lista de tokens de recuperación
-     */
-    List<TokenRecuperacion> saveAll(List<TokenRecuperacion> tokens);
 }
