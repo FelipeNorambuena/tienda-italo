@@ -309,11 +309,11 @@ public interface ProductoRepositoryImpl extends JpaRepository<Producto, Long>, P
     List<Producto> findByMarcaIdAndPrecioBetweenAndStockGreaterThanAndActivoTrue(Long marcaId, BigDecimal precioMin, BigDecimal precioMax, Integer stock);
     Page<Producto> findByMarcaIdAndPrecioBetweenAndStockGreaterThanAndActivoTrue(Long marcaId, BigDecimal precioMin, BigDecimal precioMax, Integer stock, Pageable pageable);
 
-    // Búsquedas de productos por texto completo
-    List<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
-    Page<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
-    List<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue(String texto);
-    Page<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue(String texto, Pageable pageable);
+    // Búsquedas de productos por texto completo - TEMPORALMENTE COMENTADAS
+    // List<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
+    // Page<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
+    // List<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue(String texto);
+    // Page<Producto> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivoTrue(String texto, Pageable pageable);
 
     // Búsquedas de productos por orden específico
     List<Producto> findAllByOrderByNombreAsc();

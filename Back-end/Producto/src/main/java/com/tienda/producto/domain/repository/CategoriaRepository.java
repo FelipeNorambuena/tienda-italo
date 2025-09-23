@@ -211,11 +211,11 @@ public interface CategoriaRepository {
     List<Categoria> findTop10ByActivaTrueOrderByCreatedAtDesc();
     List<Categoria> findTop10ByActivaTrueOrderByUpdatedAtDesc();
 
-    // Búsquedas de categorías por texto completo
-    List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
-    Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
-    List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
-    Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
+    // Búsquedas de categorías por texto completo - TEMPORALMENTE COMENTADAS
+    // List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
+    // Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
+    // List<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
+    // Page<Categoria> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
 
     // Búsquedas de categorías por nivel (métodos ya definidos arriba)
 

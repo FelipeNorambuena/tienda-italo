@@ -168,11 +168,11 @@ public interface MarcaRepository {
     List<Marca> findTop10ByPaisAndActivaTrueOrderByCreatedAtDesc(String pais);
     List<Marca> findTop10ByPaisAndActivaTrueOrderByUpdatedAtDesc(String pais);
 
-    // Búsquedas de marcas por texto completo
-    List<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
-    Page<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
-    List<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
-    Page<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
+    // Búsquedas de marcas por texto completo - TEMPORALMENTE COMENTADAS
+    // List<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto);
+    // Page<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCase(String texto, Pageable pageable);
+    // List<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto);
+    // Page<Marca> findByNombreContainingIgnoreCaseOrDescripcionContainingIgnoreCaseOrPalabrasClaveContainingIgnoreCaseAndActivaTrue(String texto, Pageable pageable);
 
     // Búsquedas de marcas por rango de orden (métodos ya definidos arriba)
 

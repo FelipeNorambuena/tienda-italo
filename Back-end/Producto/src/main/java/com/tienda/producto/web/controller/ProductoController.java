@@ -2,11 +2,12 @@ package com.tienda.producto.web.controller;
 
 import com.tienda.producto.application.dto.*;
 import com.tienda.producto.application.service.ProductoService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+// TEMPORALMENTE COMENTADO - Anotaciones de Swagger
+// import io.swagger.v3.oas.annotations.Operation;
+// import io.swagger.v3.oas.annotations.Parameter;
+// import io.swagger.v3.oas.annotations.responses.ApiResponse;
+// import io.swagger.v3.oas.annotations.responses.ApiResponses;
+// import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ import java.util.Optional;
 @RequestMapping("/api/productos")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Productos", description = "API para gestión de productos")
+// TEMPORALMENTE COMENTADO - @Tag(name = "Productos", description = "API para gestión de productos")
 public class ProductoController {
 
     private final ProductoService productoService;

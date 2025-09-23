@@ -11,7 +11,7 @@ import java.util.List;
  * 
  * @author Tienda Italo Team
  */
-@Mapper(componentModel = "spring", uses = {ProductoMapper.class})
+@Mapper(componentModel = "spring")
 public interface MarcaMapper {
 
     // Conversión de RequestDTO a Entity
@@ -33,15 +33,15 @@ public interface MarcaMapper {
     List<MarcaResponseDTO> toResponseDTOList(List<Marca> marcas);
 
     // Conversión de página de entidades a página de DTOs
-    @Mapping(target = "marcas", source = "content", qualifiedByName = "marcasToResponseDTOList")
+    @Mapping(target = "marcas", source = "content")
     @Mapping(target = "pagina", source = "number")
     @Mapping(target = "tamanio", source = "size")
     @Mapping(target = "totalElementos", source = "totalElements")
     @Mapping(target = "totalPaginas", source = "totalPages")
     @Mapping(target = "primeraPagina", source = "first")
     @Mapping(target = "ultimaPagina", source = "last")
-    @Mapping(target = "tieneSiguiente", source = "hasNext")
-    @Mapping(target = "tieneAnterior", source = "hasPrevious")
+    @Mapping(target = "tieneSiguiente", expression = "java(!page.isLast())")
+    @Mapping(target = "tieneAnterior", expression = "java(!page.isFirst())")
     @Mapping(target = "numeroElementos", source = "numberOfElements")
     @Mapping(target = "numeroElementosTotal", source = "totalElements")
     MarcaPageResponseDTO toPageResponseDTO(org.springframework.data.domain.Page<Marca> page);
@@ -53,16 +53,4 @@ public interface MarcaMapper {
     @Mapping(target = "updatedAt", ignore = true)
     void updateEntityFromDTO(MarcaRequestDTO requestDTO, @MappingTarget Marca marca);
 
-    // Conversión de entidad a DTO simplificado (sin relaciones)
-    @Mapping(target = "productos", ignore = true)
-    MarcaResponseDTO toSimpleResponseDTO(Marca marca);
-
-    // Conversión de lista de entidades a lista de DTOs simplificados
-    List<MarcaResponseDTO> toSimpleResponseDTOList(List<Marca> marcas);
-    
-    // Métodos auxiliares para resolver ambigüedades de MapStruct
-    @Named("marcasToResponseDTOList")
-    default List<MarcaResponseDTO> marcasToResponseDTOList(List<Marca> marcas) {
-        return toResponseDTOList(marcas);
-    }
 }

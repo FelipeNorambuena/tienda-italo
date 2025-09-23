@@ -2,11 +2,12 @@ package com.tienda.producto.web.controller;
 
 import com.tienda.producto.application.dto.*;
 import com.tienda.producto.application.service.MarcaService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+// TEMPORALMENTE COMENTADO - Anotaciones de Swagger
+// import io.swagger.v3.oas.annotations.Operation;
+// import io.swagger.v3.oas.annotations.Parameter;
+// import io.swagger.v3.oas.annotations.responses.ApiResponse;
+// import io.swagger.v3.oas.annotations.responses.ApiResponses;
+// import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @RequestMapping("/api/marcas")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Marcas", description = "API para gestión de marcas")
+// TEMPORALMENTE COMENTADO - @Tag(name = "Marcas", description = "API para gestión de marcas")
 public class MarcaController {
 
     private final MarcaService marcaService;
